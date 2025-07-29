@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="result">
+
+    {% if victory %}
+        <img src="{{ asset('images/win.jpg') }}" width="500" alt="Victory!">
+    {% else %}
+        <img src="{{ asset('images/gameOver.jpg') }}" width="500" alt="Victory!">
+    {% endif %}
+
+    <p><a href="{{ path('homepage') }}">Back to Main Menu</a><p>
+
+</div>
+{% endblock %}

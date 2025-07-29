@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Test Game Manager</title>
+</head>
+<body>
+    <h1>Test Game Manager</h1>
+
+    <a href="{{ path('test_game_start') }}">Start New Game</a> |
+    <a href="{{ path('test_game_save') }}">Save Game</a> |
+    <a href="{{ path('test_game_load') }}">Load Game</a> |
+    <a href="{{ path('test_game_reset') }}">Reset Game</a>
+
+    {% if user is null %}
+        <p>No user loaded in session.</p>
+    {% else %}
+        <p>User name: {{ user.name }}</p>
+        <p>Health: {{ user.health }}</p>
+        <p>Strength: {{ user.strength }}</p>
+        <p>Position: ({{ user.position[0] }}, {{ user.position[1] }})</p>
+
+        <h2>Remaining Moviemons</h2>
+        {% if user.remainingMoviemons is empty %}
+            <p>No remaining Moviemons.</p>
+        {% else %}
+            <ul>
+            {% for moviemon in user.remainingMoviemons %}
+                <li>{{ moviemon.name }} - Health: {{ moviemon.health }}, Strength: {{ moviemon.strength }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+
+        <h2>Captured Moviemons</h2>
+        {% if user.capturedMoviemons is empty %}
+            <p>No captured Moviemons.</p>
+        {% else %}
+            <ul>
+            {% for moviemon in user.capturedMoviemons %}
+                <li>{{ moviemon.name }} - Health: {{ moviemon.health }}, Strength: {{ moviemon.strength }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endif %}
+</body>
+</html>

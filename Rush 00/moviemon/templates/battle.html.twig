@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div style="display: flex; flex-direction: row; height: 80vh;">
+    <!-- User section -->
+    <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-start;">
+        <div style="width: 100%; text-align: center; margin-bottom: 10px;">
+            <strong>{{ user.name }}</strong><br>
+            <span style="color: #2d7a2d;">Health: {{ user.health }}</span> |
+            <span style="color: #1e4b8a;">Strength: {{ user.strength }}</span>
+        </div>
+        <img id="user-backsprite" src="/images/backspriteAsh.png" alt="Backsprite" style="width: 120px; margin-bottom: 20px; margin-top: 10px; transition: transform 0.2s;">
+    </div>
+
+    <!-- Moviemon section -->
+    <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-start;">
+        <div style="width: 100%; text-align: center; margin-bottom: 10px;">
+            <strong>{{ moviemon.name }}</strong><br> 
+            <span style="color: #c0392b;">Health: {{ moviemon.health }}</span> |
+            <span style="color: #8e44ad;">Strength: {{ moviemon.strength }}</span>
+        </div>
+        <img id="moviemon-poster" src="{{ moviemon.urlPoster }}" alt="Moviemon Poster" style="width: 180px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); transition: transform 0.2s;">
+    </div>
+
+    <!-- Actions section -->
+    <div style="flex: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start;">
+        <div style="width: 100%; padding: 30px; background: rgba(255,255,255,0.95); border-radius: 12px 12px 0 0; box-shadow: 0 -2px 8px rgba(0,0,0,0.08);">
+            <h2 style="
+    margin-bottom: 24px;
+    font-size: 28px;
+    color: #222;
+    text-align: left;
+    font-weight: bold;
+    font-family: 'Arial', sans-serif;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        ">
+        🎮 Cosa vuoi fare?
+</h2>
+
+            <ul style="list-style: none; padding: 0; margin: 0;">
+                <li style="margin-bottom: 16px;">
+                    <a href="#" onclick="triggerFight('{{ path('battle_fight', {'moviemon': moviemon.name}) }}')" class="btn-fight">⚔️ Fight</a>
+               </li>
+            <a href="{{ path('battle_escape', {'moviemon': moviemon.name}) }}" class="btn-escape">🏃 Escape</a>
+                </li>
+                <li style="margin-top: 16px;">
+                    <a href="{{ path('battle_catch', {'moviemon': moviemon.name}) }}" class="btn-catch">🎯 Catch</a>
+                </li>
+        </ul>
+        </div>
+    </div>
+</div>
+<script>
+
+// Simple jump animation for both images
+function jumpImage(id, maxPx) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const jump = Math.floor(Math.random() * maxPx * 2) - maxPx; // from -maxPx to +maxPx
+    el.style.transform = `translateY(${jump}px)`;
+}
+setInterval(() => {
+    jumpImage('user-backsprite', 8);
+    jumpImage('moviemon-poster', 8);
+}, 400);
+</script>
+<script>
+function triggerFight(redirectUrl) {
+    const poster = document.getElementById('moviemon-poster');
+    if (!poster) {
+        window.location.href = redirectUrl;
+        return;
+    }
+
+    // Trigger animation
+    poster.classList.remove('epic-hit');
+    void poster.offsetWidth; // Force reflow
+    poster.classList.add('epic-hit');
+
+    document.body.classList.add('shake-screen');
+
+    // Optional: play sound
+    // const audio = new Audio('/sounds/hit.mp3');
+    // audio.play();
+
+    setTimeout(() => {
+        document.body.classList.remove('shake-screen');
+        window.location.href = redirectUrl;
+    }, 600); // Match animation duration
+}
+</script>
+
+<style>
+@keyframes epicHit {
+  0%   { transform: scale(1) translate(0, 0); filter: brightness(1); }
+  10%  { transform: scale(1.1) translate(-5px, 0); filter: brightness(2); }
+  20%  { transform: scale(1) translate(5px, 0); }
+  30%  { transform: scale(1.1) translate(-3px, 0); }
+  40%  { transform: scale(1) translate(3px, 0); }
+  50%  { transform: scale(1.05) translate(-2px, 0); filter: brightness(1.5); }
+  60%  { transform: scale(1) translate(2px, 0); }
+  70%  { transform: scale(1.02); }
+  80%  { transform: scale(1); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+
+.epic-hit {
+  animation: epicHit 0.6s ease-in-out;
+}
+
+@keyframes screenShake {
+  0%   { transform: translate(0px, 0px); }
+  20%  { transform: translate(-5px, 5px); }
+  40%  { transform: translate(5px, -5px); }
+  60%  { transform: translate(-3px, 3px); }
+  80%  { transform: translate(3px, -3px); }
+  100% { transform: translate(0px, 0px); }
+}
+
+.shake-screen {
+  animation: screenShake 0.4s ease-in-out;
+}
+</style>
+
+
+{% endblock %}

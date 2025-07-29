@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="content">
+
+    <div class="catched box-panel">
+        <h3>🎬 Catched Moviemons</h3>
+        <ul>
+            {% for movie in catched %}
+                <li>{{ movie }}</li>
+            {% else %}
+                <li>No movies caught yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="center">
+
+        <a href="/moviedex" class="menu-btn load">🎬 Moviedex</a>
+        <a href="/?from=overworld" class="menu-btn cancel">🏠 Menu</a>
+
+        <div class="map">
+            {% for row in map %}
+                <div class="row">
+                    {% for cell in row %}
+                        <div class="{% if cell == 'L' %}player-cell{% else %}cell{% endif %}"> {{ cell }} </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="controls">
+            <div></div>
+            <button><a href="/move/up">⬆️</a></button>
+            <div></div>
+            <button><a href="/move/left">⬅️</a></button>
+            <button><a href="/move/down">⬇️</a></button>
+            <button><a href="/move/right">➡️</a></button>
+        </div>
+
+    </div>
+
+<div class="remaining box-panel tall-panel">
+    <h3>🎯 Remaining Moviemons</h3>
+    <ul>
+        {% for movie in catchable %}
+            <li>{{ movie }}</li>
+        {% else %}
+            <li>All moviemons caught!</li>
+        {% endfor %}
+    </ul>
+</div>
+
+</div>
+
+<style>
+.box-panel {
+    background-color: #f9f9f9;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    padding: 1.5em;
+    margin: 1em;
+    width: 220px;
+    overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+.tall-panel {
+    max-height: 600px; /* aumentato da 400px */
+}
+
+.box-panel h3 {
+    font-size: 1.4em;
+    color: #333;
+    margin-bottom: 0.8em;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.5em;
+}
+
+.box-panel ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.box-panel li {
+    background-color: #fff;
+    padding: 0.6em 1em;
+    margin-bottom: 0.4em;
+    border-radius: 8px;
+    font-size: 1em;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
+}
+
+.box-panel li:hover {
+    transform: scale(1.02);
+    background-color: #f0f0ff;
+}
+</style>
+
+
+{% endblock %}

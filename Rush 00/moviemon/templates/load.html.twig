@@ -1,0 +1,21 @@
+{# templates/load.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class=menu>
+    <h1>Load Game</h1>
+
+    {% if saves is empty %}
+        <p>No saved games found.</p>
+    {% else %}
+        {% for name in saves %}
+            <a href="{{ path('load_specific_game', { playerName: name }) }}" class="menu-btn load">{{ name }}</a>
+            <br>
+            <br>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    <p><a href="{{ path('homepage') }}" class="menu-btn cancel">Back to Menu</a></p>
+</div>
+{% endblock %}

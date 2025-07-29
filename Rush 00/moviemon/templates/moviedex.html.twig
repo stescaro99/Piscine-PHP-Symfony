@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1 style="text-align: center; margin-bottom: 1em;">Moviemon Dex</h1>
+
+    <div class="moviedex">
+        {% for moviemon in moviemons %}
+            <div class="moviedex-entry">
+                <h2>{{ moviemon.name }}</h2>
+                <img src="{{ moviemon.urlPoster }}" alt="{{ moviemon.name }} Poster">
+                <p><strong>Health:</strong> {{ moviemon.maxHealth }}</p>
+                <p><strong>Strength:</strong> {{ moviemon.strength }}</p>
+                <p><strong>Plot:</strong> {{ moviemon.plot }}</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="moviedex-actions">
+        <a href="{{ path('overworld') }}" class="btn btn-primary">Cancel</a>
+    </div>
+{% endblock %}
