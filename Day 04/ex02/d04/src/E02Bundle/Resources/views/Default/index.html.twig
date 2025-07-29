@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>E02 - Message Form</title>
+</head>
+<body>
+    <h1>Message Form</h1>
+    
+    {% for flash_error in app.session.flashBag.get('error') %}
+        <div style="color: red;">{{ flash_error }}</div>
+    {% endfor %}
+    
+    {% for flash_success in app.session.flashBag.get('success') %}
+        <div style="color: green;">{{ flash_success }}</div>
+    {% endfor %}
+    
+    {{ form(form) }}
+    
+    {% if lastLine %}
+        <h3>Last line added to file:</h3>
+        <p>{{ lastLine }}</p>
+    {% endif %}
+</body>
+</html>

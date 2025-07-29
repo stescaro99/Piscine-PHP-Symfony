@@ -1,0 +1,24 @@
+{% extends "E01Bundle::base.html.twig" %}
+
+{% block title %}{{ category|title }} - Symfony2 Cheatsheet{% endblock %}
+
+{% block content %}
+    <h2>{{ category|title }} Cheatsheet</h2>
+    
+    <p><strong>Navigation:</strong></p>
+    <ul>
+        {% for cat in categories %}
+            <li>
+                <a href="{{ path('e01_category', {'category': cat}) }}">
+                    {{ cat|title }}{% if cat == category %} (current){% endif %}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <hr>
+
+    <div class="cheatsheet-content">
+        {% include "E01Bundle::cheatsheets/" ~ category ~ ".html.twig" %}
+    </div>
+{% endblock %}

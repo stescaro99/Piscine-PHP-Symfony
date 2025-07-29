@@ -1,0 +1,18 @@
+{% extends "E01Bundle::base.html.twig" %}
+
+{% block title %}Symfony2 Cheatsheet - Categories{% endblock %}
+
+{% block content %}
+    <h2>Available Categories</h2>
+    <p>Select a category to view the corresponding cheatsheet:</p>
+    
+    <ul>
+        {% for category in categories %}
+            <li>
+                <a href="{{ path('e01_category', {'category': category}) }}">
+                    {{ category|title }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

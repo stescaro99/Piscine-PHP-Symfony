@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Form</title>
+        <meta charset="UTF-8">
+        <script src="popup.js"></script>
+    </head>
+    <body>
+        <form>
+            <label for="firstname">Firstname :</label>
+            <input type="text" id="firstname" name="firstname" placeholder="Donald" required>
+            <br>
+            
+            <label for="name">Name :</label>
+            <input type="text" id="name" name="name" placeholder="Donald Duck" required>
+            <br>
+            
+            <label for="age">Age :</label>
+            <input type="number" id="age" name="age" min="0" max="150" required>
+            <br>
+            
+            <label for="phone">Phone :</label>
+            <input type="tel" id="phone" name="phone" placeholder="+31 4159265358" required>
+            <br>
+            
+            <label for="email">Email :</label>
+            <input type="email" id="email" name="email" placeholder="anniniludovica@gmail.com" required>
+            <br>
+            
+            <label for="student">Student at 42 ? :</label>
+            <input type="checkbox" id="student" name="student" value="yes" required>
+            <br>
+            
+            <label>Gender :</label>
+            <label>
+                <input type="radio" id="gender_male" name="gender" value="Male" required>
+                Male
+            </label>
+            <label>
+                <input type="radio" id="gender_female" name="gender" value="Female" required>
+                Female
+            </label>
+            <label>
+                <input type="radio" id="gender_other" name="gender" value="Other" required>
+                Other
+            </label>
+            <br>
+            
+            <input type="button" name="button" value="Run that sexy Javascript!" onclick="displayFormContents()">
+        </form>
+
+    </body>
+</html>
