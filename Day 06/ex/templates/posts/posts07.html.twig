@@ -1,0 +1,46 @@
+{% if form is defined and app.user and (app.user.getReputation() >= 0 or app.user.isAdmin()) %}
+    <section id="post">
+        <h2>Post a Comment</h2>
+        {{ form_start(form, {'action': path('e07posts')}) }}
+            {{ form_row(form.title) }}
+            {{ form_row(form.content) }}
+            <button type="submit">Submit</button>
+        {{ form_end(form) }}
+    </section>
+{% endif %}
+{% for post in posts %}
+    <div class="post">
+        <h3>
+        {% if app.user %}
+            <a href="{{ path('post_detail07', {'id': post.id}) }}">{{ post.title }}</a>
+        {% else %}
+            {{ post.title }}
+        {% endif %}
+        </h3>
+        <p>{{ post.content }}</p>
+        <p>
+            <strong>Author:</strong> {{ post.author.username }}
+            <span style="color: #888;">(Reputation: {{ post.author.getReputation() }})</span>
+        </p>
+        <p>
+            👍 {{ post.countLikes() }}
+            &nbsp;
+            👎 {{ post.countDislikes() }}
+        </p>
+        {% if app.user and (app.user.getReputation() >= 3 or app.user.isAdmin()) %}
+            <a href="{{ path('post_vote', {'id': post.id, 'type': 'like'}) }}">Like</a>
+        {% endif %}
+        {% if app.user and (app.user.getReputation() >= 6 or app.user.isAdmin()) %}
+            {% if app.user.getReputation() >= 3 or app.user.isAdmin() %} | {% endif %}
+            <a href="{{ path('post_vote', {'id': post.id, 'type': 'dislike'}) }}">Dislike</a>
+        {% endif %}
+        {% if app.user and (post.author.id == app.user.id or app.user.getReputation() >= 9 or app.user.isAdmin()) %}
+            | <a href="{{ path('post_edit', {'id': post.id}) }}">Edit</a>
+        {% endif %}
+        {% if app.user and post.author.id == app.user.id %}
+            | <a href="{{ path('post_delete', {'id': post.id}) }}" onclick="return confirm('Are you sure?');">Delete</a>
+        {% endif %}
+    </div>
+{% else %}
+    <p>No posts available.</p>
+{% endfor %}

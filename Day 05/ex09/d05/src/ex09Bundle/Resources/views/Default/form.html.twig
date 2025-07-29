@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Add New Person</h1>
+    
+    {% if form.vars.errors|length > 0 %}
+        {% for error in form.vars.errors %}
+            <div class="alert alert-danger">{{ error.message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{ form_label(form.username) }}
+                    {{ form_widget(form.username) }}
+                    {{ form_errors(form.username) }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{ form_label(form.name) }}
+                    {{ form_widget(form.name) }}
+                    {{ form_errors(form.name) }}
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email) }}
+            {{ form_errors(form.email) }}
+        </div>
+        
+        <div class="form-check">
+            {{ form_widget(form.enable) }}
+            {{ form_label(form.enable) }}
+        </div>
+        
+        <div class="form-group">
+            {{ form_label(form.birthdate) }}
+            {{ form_widget(form.birthdate) }}
+            {{ form_errors(form.birthdate) }}
+        </div>
+        
+        {% if has_marital_status and form.maritalStatus is defined %}
+        <div class="form-group">
+            {{ form_label(form.maritalStatus) }}
+            {{ form_widget(form.maritalStatus) }}
+            {{ form_errors(form.maritalStatus) }}
+        </div>
+        {% endif %}
+        
+        {{ form_widget(form.submit) }}
+    {{ form_end(form) }}
+    
+    <a href="{{ path('ex09_list') }}" class="btn btn-secondary mt-3">View Persons</a>
+</div>
+{% endblock %}

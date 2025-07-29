@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Table Data</h1>
+    {% for message in app.session.flashbag.get('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+    {% for message in app.session.flashbag.get('error') %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
+    <a href="{{ path('ex14_form') }}" class="btn btn-primary mb-3">Add New Row</a>
+
+    {% if not tableExists %}
+        <div class="alert alert-danger">Table does not exist!</div>
+        <a href="{{ path('ex14_create_table') }}" class="btn btn-warning">Create Table</a>
+    {% elseif results|length > 0 %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Info</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in results %}
+                <tr>
+                    <td>{{ row.id }}</td>
+                    <td>{{ row.info }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-info">No data found. <a href="{{ path('ex14_form') }}">Add the first row</a>.</div>
+    {% endif %}
+    <a href="{{ path('ex14_index') }}" class="btn btn-secondary mt-3">Back</a>
+</div>
+{% endblock %}

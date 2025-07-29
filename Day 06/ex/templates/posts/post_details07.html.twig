@@ -1,0 +1,36 @@
+<section class="post-details">
+    <h2>{{ post.title }}</h2>
+    <p><strong>Author:</strong> {{ post.author.username }} <span style="color: #888;">(Reputation: {{ post.author.getReputation() }})</span></p>
+    <p><strong>Date:</strong> {{ post.created|date('Y-m-d H:i') }}</p>
+    <div class="content">
+        {{ post.content|nl2br }}
+    </div>
+    <p>
+        👍 {{ post.countLikes() }}
+        &nbsp;
+        👎 {{ post.countDislikes() }}
+    </p>
+    {% if app.user and (app.user.getReputation() >= 3 or app.user.isAdmin()) %}
+        <a href="{{ path('post_vote', {'id': post.id, 'type': 'like'}) }}">Like</a>
+    {% endif %}
+    {% if app.user and (app.user.getReputation() >= 6 or app.user.isAdmin()) %}
+        {% if app.user.getReputation() >= 3 or app.user.isAdmin() %} | {% endif %}
+        <a href="{{ path('post_vote', {'id': post.id, 'type': 'dislike'}) }}">Dislike</a>
+    {% endif %}
+    {% if app.user and (post.author.id == app.user.id or app.user.getReputation() >= 9 or app.user.isAdmin()) %}
+        <br>
+        <a href="{{ path('post_edit', {'id': post.id}) }}">Edit</a>
+    {% endif %}
+    {% if app.user and post.author.id == app.user.id %}
+        {% if post.author.id == app.user.id or app.user.getReputation() >= 9 or app.user.isAdmin() %} | {% endif %}
+        <a href="{{ path('post_delete', {'id': post.id}) }}" onclick="return confirm('Are you sure?');">Delete</a>
+    {% endif %}
+    {% if post.updated and post.lastEditedBy %}
+        <div style="margin-top: 1em; color: #888; font-size: 0.95em;">
+            Last edited by {{ post.lastEditedBy.username }} on {{ post.updated|date('Y-m-d H:i') }}
+        </div>
+    {% endif %}
+    <div>
+        <a href="{{ path('e07posts') }}"> ⤾ Back to posts</a>
+    </div>
+</section>

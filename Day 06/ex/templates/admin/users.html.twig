@@ -1,0 +1,26 @@
+<h1>Lista utenti</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Actions</th>
+    </tr>
+    {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+                {% if user.id != currentUser.id %}
+                    <form method="post" action="{{ path('admin_delete_user', {id: user.id}) }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete-user-' ~ user.id) }}">
+                        <button type="submit" onclick="return confirm('Sei sicuro di voler eliminare questo utente?')">Delete</button>
+                    </form>
+                {% else %}
+                    <span>You cannot delete yourself</span>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+</table>

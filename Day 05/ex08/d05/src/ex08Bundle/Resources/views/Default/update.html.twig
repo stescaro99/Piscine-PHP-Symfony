@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Update User</h1>
+    
+    {% for message in app.session.flashbag.get('error') %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            {{ form_start(form, {'action': path('ex08_update', {'id': user.id}), 'method': 'POST'}) }}
+                
+                <div class="mb-3">
+                    {{ form_label(form.username, 'Username', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.username) }}
+                    {{ form_errors(form.username) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.name, 'Name', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.name) }}
+                    {{ form_errors(form.name) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.email, 'Email', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.email) }}
+                    {{ form_errors(form.email) }}
+                </div>
+
+                <div class="mb-3 form-check">
+                    {{ form_widget(form.enable) }}
+                    {{ form_label(form.enable, 'Enabled', {'label_attr': {'class': 'form-check-label'}}) }}
+                    {{ form_errors(form.enable) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.birthdate, 'Birthdate', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.birthdate) }}
+                    {{ form_errors(form.birthdate) }}
+                </div>
+
+                {% if has_marital_status and form.maritalStatus is defined %}
+                <div class="mb-3">
+                    {{ form_label(form.maritalStatus, 'Marital Status', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.maritalStatus) }}
+                    {{ form_errors(form.maritalStatus) }}
+                </div>
+                {% endif %}
+
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-warning">Update User</button>
+                    <a href="{{ path('ex08_list') }}" class="btn btn-secondary">Cancel</a>
+                </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% if not user and anonymous_name %}
+    <div>
+        <strong>Welcome, {{ anonymous_name }}!</strong>
+    </div>
+    {% if seconds_since_last_request is not null %}
+        <div>
+            {{ seconds_since_last_request }} seconds have passed since your last request.
+        </div>
+    {% endif %}
+{% endif %}
+{% if user %}
+    <div>
+        <strong>Welcome, {{ user.username }}!</strong>
+    </div>
+{% endif %}

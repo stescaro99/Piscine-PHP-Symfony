@@ -1,0 +1,38 @@
+{% if form is defined and app.user %}
+    <section id="post">
+        <h2>Post a Comment</h2>
+        {{ form_start(form, {'action': path('e05posts')}) }}
+            {{ form_row(form.title) }}
+            {{ form_row(form.content) }}
+            <button type="submit">Submit</button>
+        {{ form_end(form) }}
+    </section>
+{% endif %}
+{% for post in posts %}
+    <div class="post">
+        <h3>
+        {% if app.user %}
+            <a href="{{ path('post_detail05', {'id': post.id}) }}">{{ post.title }}</a>
+        {% else %}
+            {{ post.title }}
+        {% endif %}
+        </h3>
+        <p>{{ post.content }}</p>
+        <p>
+            <strong>Author:</strong> {{ post.author.username }}
+            <span style="color: #888;">(Reputation: {{ post.author.getReputation() }})</span>
+        </p>
+        <p>
+            👍 {{ post.countLikes() }}
+            &nbsp;
+            👎 {{ post.countDislikes() }}
+        </p>
+        {% if app.user %}
+            <a href="{{ path('post_vote', {'id': post.id, 'type': 'like'}) }}">Like</a>
+            |
+            <a href="{{ path('post_vote', {'id': post.id, 'type': 'dislike'}) }}">Dislike</a>
+        {% endif %}
+    </div>
+{% else %}
+    <p>No posts available.</p>
+{% endfor %}

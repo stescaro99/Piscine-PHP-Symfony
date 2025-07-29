@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>SQL Injection Demo</h1>
+    {% if tableExists %}
+        <div class="alert alert-success">Table exists!</div>
+        <a href="{{ path('ex14_form') }}" class="btn btn-primary">Insert Info</a>
+        <a href="{{ path('ex14_list') }}" class="btn btn-info">View Table Data</a>
+    {% else %}
+        <div class="alert alert-danger">Table does not exist!</div>
+        <a href="{{ path('ex14_create_table') }}" class="btn btn-warning">Create Table</a>
+    {% endif %}
+    {% for message in app.session.flashbag.get('success') %}
+        <div class="alert alert-success mt-3">{{ message }}</div>
+    {% endfor %}
+</div>
+{% endblock %}

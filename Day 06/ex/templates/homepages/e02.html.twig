@@ -1,0 +1,24 @@
+{% if user %}
+    <h1>Welcome, {{ user.username }}!</h1>
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+    <a href="{{ path('app_logout') }}">Logout</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('e02admin_users') }}">Manage Users</a>
+    {% endif %}
+{% else %}
+    <h1>Welcome guest!</h1>
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+    <div>
+        <a href="{{ path('app_login') }}">Login</a>
+    </div>
+    <div>
+        <a href="{{ path('app_register') }}">Signup</a>
+    </div>
+    <div>
+        <a href="{{ path('e01resetdb') }}">Reset Database</a>
+    </div>
+{% endif %}

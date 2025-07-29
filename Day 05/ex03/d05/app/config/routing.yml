@@ -1,0 +1,8 @@
+ex03:
+    resource: "@ex03Bundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation

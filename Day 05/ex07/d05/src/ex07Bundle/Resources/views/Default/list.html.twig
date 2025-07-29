@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Users List</h1>
+    
+    {% for message in app.session.flashbag.get('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+    
+    {% for message in app.session.flashbag.get('error') %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
+
+    <a href="{{ path('ex07_form') }}" class="btn btn-primary mb-3">Add New User</a>
+    
+    {% if users|length > 0 %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Enabled</th>
+                    <th>Birthdate</th>
+                    <th>Address</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.enable ? 'Yes' : 'No' }}</td>
+                    <td>{{ user.birthdate|date('Y-m-d H:i:s') }}</td>
+                    <td>{{ user.address|slice(0, 50) }}{% if user.address|length > 50 %}...{% endif %}</td>
+                    <td>
+                        <a href="{{ path('ex07_update', {'id': user.id}) }}" class="btn btn-warning btn-sm">Update</a>
+                        <form action="{{ path('ex07_delete', {'id': user.id}) }}" method="post" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-info">No users found. <a href="{{ path('ex07_form') }}">Add the first user</a>.</div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container mt-4">
+    <h2>Insert Info (Vulnerable to SQL Injection)</h2>
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+    <form method="post" id="injectionForm">
+        <div class="form-group">
+            <label for="info">Info</label>
+            <input type="text" class="form-control" name="info" id="info" required>
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+        <a href="{{ path('ex14_index') }}" class="btn btn-secondary mt-3">Back</a>
+    </form>
+    <div class="mt-3">
+        <strong>Try this SQL injection:</strong>
+        <code>'; DROP TABLE injections_ex14; --</code>
+    </div>
+</div>
+<script>
+function injectSQL() {
+    document.getElementById('info').value = "'); DROP TABLE injections_ex14; --";
+}
+document.getElementById('injectionForm').insertAdjacentHTML('beforeend', '<button type="button" class="btn btn-danger mt-2" onclick="injectSQL()">Inject SQL</button>');
+</script>
+{% endblock %}

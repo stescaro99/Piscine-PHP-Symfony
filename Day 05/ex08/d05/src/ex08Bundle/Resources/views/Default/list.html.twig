@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Users List</h1>
+    
+    {% for message in app.session.flashbag.get('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+    
+    {% for message in app.session.flashbag.get('error') %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
+
+    <a href="{{ path('ex08_form') }}" class="btn btn-primary mb-3">Add New User</a>
+    
+    <!-- Test Buttons for New Functions -->
+    <div class="mb-3">
+        <h4>Test Functions:</h4>
+        <a href="{{ path('ex08_add_marital_status') }}" class="btn btn-info btn-sm">Add Marital Status Column</a>
+        <a href="{{ path('ex08_create_related_tables') }}" class="btn btn-info btn-sm">Create Related Tables</a>
+        <a href="{{ path('ex08_create_relationships') }}" class="btn btn-warning btn-sm">Create Relationships</a>
+    </div>
+    
+    {% if users|length > 0 %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Enabled</th>
+                    <th>Birthdate</th>
+                    {% if has_marital_status %}
+                    <th>Marital Status</th>
+                    {% endif %}
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.enable ? 'Yes' : 'No' }}</td>
+                    <td>{{ user.birthdate|date('Y-m-d H:i:s') }}</td>
+                    {% if has_marital_status %}
+                    <td>{{ user.marital_status|default('Not set') }}</td>
+                    {% endif %}
+                    <td>
+                        <a href="{{ path('ex08_update', {'id': user.id}) }}" class="btn btn-warning btn-sm">Update</a>
+                        <form action="{{ path('ex08_delete', {'id': user.id}) }}" method="post" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-info">No users found. <a href="{{ path('ex08_form') }}">Add the first user</a>.</div>
+    {% endif %}
+</div>
+{% endblock %}

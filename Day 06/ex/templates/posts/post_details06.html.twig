@@ -1,0 +1,32 @@
+<section class="post-details">
+    <h2>{{ post.title }}</h2>
+    <p><strong>Author:</strong> {{ post.author.username }} <span style="color: #888;">(Reputation: {{ post.author.getReputation() }})</span></p>
+    <p><strong>Date:</strong> {{ post.created|date('Y-m-d H:i') }}</p>
+    <div class="content">
+        {{ post.content|nl2br }}
+    </div>
+    <p>
+        👍 {{ post.countLikes() }}
+        &nbsp;
+        👎 {{ post.countDislikes() }}
+    </p>
+    {% if app.user %}
+        <a href="{{ path('post_vote', {'id': post.id, 'type': 'like'}) }}">Like</a>
+        |
+        <a href="{{ path('post_vote', {'id': post.id, 'type': 'dislike'}) }}">Dislike</a>
+    {% endif %}
+    {% if post.author.getId() == app.user.getId() %}
+        <br>
+        <a href="{{ path('post_edit', {'id': post.id}) }}">Edit</a>
+        |
+        <a href="{{ path('post_delete', {'id': post.id}) }}">Delete</a>
+    {% endif %}
+    {% if post.updated and post.lastEditedBy %}
+        <div style="margin-top: 1em; color: #888; font-size: 0.95em;">
+            Last edited by {{ post.lastEditedBy.username }} on {{ post.updated|date('Y-m-d H:i') }}
+        </div>
+    {% endif %}
+    <div>
+        <a href="{{ path('e06posts') }}"> ⤾ Back to posts</a>
+    </div>
+</section>

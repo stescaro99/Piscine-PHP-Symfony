@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Exercise 02 - CRUD with SQL</h1>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <a href="{{ path('ex05_create_table') }}" class="btn btn-success btn-block">Create Table</a>
+        </div>
+        <div class="col-md-4">
+            <a href="{{ path('ex05_form') }}" class="btn btn-primary btn-block">Add User</a>
+        </div>
+        <div class="col-md-4">
+            <a href="{{ path('ex05_list') }}" class="btn btn-info btn-block">View Users</a>
+        </div>
+    </div>
+    
+    <div class="mt-4">
+        <h3>Instructions:</h3>
+        <ol>
+            <li><strong>Create Table:</strong> Creates the users_ex05 table if it doesn't exist</li>
+            <li><strong>Add User:</strong> Form to insert new users with validation</li>
+            <li><strong>View Users:</strong> Display all users in a table format</li>
+        </ol>
+    </div>
+</div>
+{% endblock %}

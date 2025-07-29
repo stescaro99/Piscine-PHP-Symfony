@@ -1,1 +1,21 @@
-Hello World!
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Ex00</title>
+</head>
+<body>
+    <p>Click the button below to create the database table</p>
+    <a href="{{ path('create_table') }}" class="button">Create Database Table</a>
+    <h3>Table Structure:</h3>
+    <ul>
+        <li><strong>id</strong> - integer - primary key (auto increment)</li>
+        <li><strong>username</strong> - string - unique</li>
+        <li><strong>name</strong> - string</li>
+        <li><strong>email</strong> - string - unique</li>
+        <li><strong>enable</strong> - boolean</li>
+        <li><strong>birthdate</strong> - datetime</li>
+        <li><strong>address</strong> - long text</li>
+    </ul>
+</body>
+</html>

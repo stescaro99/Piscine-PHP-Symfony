@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Ex01 - Table Creation Result</title>
+    <style>
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <h1>Database Table Creation Result</h1>
+    {% if success is defined %}
+        <div class="message {{ success ? 'success' : 'error' }}">
+            {{ message }}
+        </div>
+    {% else %}
+        <div class="message {{ message starts with 'Error' ? 'error' : 'success' }}">
+            {{ message }}
+        </div>
+    {% endif %}
+    <a href="{{ path('ex01_index') }}" class="button">Back to Home</a>
+</body>
+</html>

@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Exercise 02 - CRUD with SQL</h1>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <a href="{{ path('ex10_create_table') }}" class="btn btn-success btn-block">Create Table</a>
+        </div>
+        <div class="col-md-4">
+            <a href="{{ path('ex10_form') }}" class="btn btn-primary btn-block">Add Person</a>
+        </div>
+        <div class="col-md-4">
+            <a href="{{ path('ex10_list') }}" class="btn btn-info btn-block">View Persons</a>
+        </div>
+        <div>
+            <a href="{{ path('ex10_add_marital_status') }}">Add Marital Status Column</a>
+        </div>
+        <div>
+            <a href="{{ path('ex10_create_related_entities') }}">Create Related Entities</a>
+        </div>
+        <div>
+            <a href="{{ path('ex10_create_relationships') }}">Create Relationships</a>
+        </div>
+        <div>
+            <a href="{{ path('ex10_create_raw_table') }}">Create Raw SQL Table</a>
+        </div>
+        <div>
+            <a href="{{ path('ex10_import_file') }}">Import from File (SQL & ORM)</a>
+        </div>
+    </div>
+    
+    <div class="mt-4">
+        <h3>Instructions:</h3>
+        <ol>
+            <li><strong>Create Table:</strong> Creates the persons_ex10 table if it doesn't exist</li>
+            <li><strong>Add Person:</strong> Form to insert new persons with validation</li>
+            <li><strong>View Persons:</strong> Display all persons in a table format</li>
+        </ol>
+    </div>
+</div>
+{% endblock %}

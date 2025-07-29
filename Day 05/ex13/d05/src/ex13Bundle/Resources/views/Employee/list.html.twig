@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="container mt-4">
+    <h1>Employee List</h1>
+    {% for message in app.session.flashbag.get('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+    {% for message in app.session.flashbag.get('error') %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
+    <a href="{{ path('ex13_employee_new') }}" class="btn btn-primary mb-3">Add New Employee</a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+                <th>Birthdate</th>
+                <th>Active</th>
+                <th>Employed Since</th>
+                <th>Employed Until</th>
+                <th>Hours</th>
+                <th>Salary</th>
+                <th>Position</th>
+                <th>Manager</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for employee in employees %}
+            <tr>
+                <td>{{ employee.id }}</td>
+                <td>{{ employee.firstname }}</td>
+                <td>{{ employee.lastname }}</td>
+                <td>{{ employee.email }}</td>
+                <td>{{ employee.birthdate|date('Y-m-d') }}</td>
+                <td>{{ employee.active ? 'Yes' : 'No' }}</td>
+                <td>{{ employee.employedSince|date('Y-m-d') }}</td>
+                <td>{{ employee.employedUntil is not null ? employee.employedUntil|date('Y-m-d') : '' }}</td>
+                <td>{{ employee.hours }}</td>
+                <td>{{ employee.salary }}</td>
+                <td>{{ employee.position }}</td>
+                <td>{{ employee.manager ? employee.manager.firstname ~ ' ' ~ employee.manager.lastname : '' }}</td>
+                <td>
+                    <a href="{{ path('ex13_employee_edit', {'id': employee.id}) }}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{{ path('ex13_employee_delete', {'id': employee.id}) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?');">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

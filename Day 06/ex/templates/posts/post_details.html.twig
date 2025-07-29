@@ -1,0 +1,11 @@
+<section class="post-details">
+    <h2>{{ post.title }}</h2>
+    <p><strong>Author:</strong> {{ post.author.username }} <span style="color: #888;">(Reputation: {{ post.author.getReputation() }})</span></p>
+    <p><strong>Date:</strong> {{ post.created|date('Y-m-d H:i') }}</p>
+    <div class="content">
+        {{ post.content|nl2br }}
+    </div>
+    <div>
+        <a href="{{ path('e03posts') }}"> ⤾ Back to posts</a>
+    </div>
+</section>

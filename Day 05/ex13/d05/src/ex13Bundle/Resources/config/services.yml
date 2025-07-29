@@ -1,0 +1,4 @@
+services:
+#    ex13.example:
+#        class: ex13Bundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

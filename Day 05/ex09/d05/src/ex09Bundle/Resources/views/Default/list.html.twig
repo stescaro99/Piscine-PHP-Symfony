@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Persons List</h1>
+    
+    {% for message in app.session.flashbag.get('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+    
+    {% for message in app.session.flashbag.get('error') %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
+
+    <a href="{{ path('ex09_form') }}" class="btn btn-primary mb-3">Add New Person</a>
+    
+    {% if persons|length > 0 %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Enabled</th>
+                    <th>Birthdate</th>
+                    {% if has_marital_status %}
+                    <th>Marital Status</th>
+                    {% endif %}
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for person in persons %}
+                <tr>
+                    <td>{{ person.id }}</td>
+                    <td>{{ person.username }}</td>
+                    <td>{{ person.name }}</td>
+                    <td>{{ person.email }}</td>
+                    <td>{{ person.enable ? 'Yes' : 'No' }}</td>
+                    <td>{{ person.birthdate|date('Y-m-d H:i:s') }}</td>
+                    {% if has_marital_status %}
+                    <td>
+                        {# Try both camelCase and snake_case #}
+                        {% if person.maritalStatus is defined %}
+                            {{ person.maritalStatus }}
+                        {% elseif person.marital_status is defined %}
+                            {{ person.marital_status }}
+                        {% else %}
+                            {# fallback #}
+                        {% endif %}
+                    </td>
+                    {% endif %}
+                    <td>
+                        <a href="{{ path('ex09_update', {'id': person.id}) }}" class="btn btn-warning btn-sm">Update</a>
+                        <form action="{{ path('ex09_delete', {'id': person.id}) }}" method="post" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this person?');">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-info">No persons found. <a href="{{ path('ex09_form') }}">Add the first person</a>.</div>
+    {% endif %}
+</div>
+{% endblock %}
