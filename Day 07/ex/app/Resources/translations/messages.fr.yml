@@ -1,0 +1,4 @@
+ex02.number: 'Le numéro de configuration est %number%'
+ex02.count.0: 'aucun'
+ex02.count.1: 'un'
+ex02.count.other: 'nombre %count%'

@@ -1,0 +1,5 @@
+ex02.number: 'The config number is %number%'
+ex02.count:
+    0: 'none'
+    1: 'one'
+    other: 'number %count%'

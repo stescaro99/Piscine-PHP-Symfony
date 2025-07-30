@@ -1,0 +1,10 @@
+<p>{{ 'ex02.number'|trans({'%number%': number}) }}</p>
+<p>
+  {% if count == 0 %}
+    {{ 'ex02.count.0'|trans({'%count%': count}) }}
+  {% elseif count == 1 %}
+    {{ 'ex02.count.1'|trans({'%count%': count}) }}
+  {% else %}
+    {{ 'ex02.count.other'|trans({'%count%': count}) }}
+  {% endif %}
+</p>

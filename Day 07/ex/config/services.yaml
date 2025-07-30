@@ -4,6 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    d07.number: 42
+    d07.enable: true
 
 services:
     # default configuration for services in *this* file
@@ -20,5 +22,11 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    App\D07Bundle\Service\Ex03Service:
+        public: true
+
+    App\D07Bundle\Twig\Ex03Extension:
+        arguments:
+            - '@App\D07Bundle\Service\Ex03Service'
+        tags:
+            - { name: twig.extension }

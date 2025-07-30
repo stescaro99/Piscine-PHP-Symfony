@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Demo Twig Extension</h2>
+    <p>Original: {{ string1 }}</p>
+    <p>Uppercase Words: {{ string1|uppercaseWords }}</p>
+    <p>Original: {{ string2 }}</p>
+    <p>Count Numbers: {{ countNumbers(string2) }}</p>
+{% endblock %}
