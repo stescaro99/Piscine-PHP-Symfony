@@ -1,0 +1,3 @@
+If running inside another VM (nested virtualization):
+Nested virtualization is often disabled by default. You need to enable it in your host hypervisor (e.g., VirtualBox, VMware, KVM).
+If you cannot enable it, you cannot run VirtualBox VMs inside another VM.
