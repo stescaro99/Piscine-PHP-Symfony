@@ -1,0 +1,46 @@
+<div style="margin-bottom:1em;">
+    <a href="/it">Italiano</a> |
+    <a href="/en">English</a>
+</div>
+{% if app.user %}
+    <form id="post-form" method="post" action="{{ path('post_create') }}">
+        <label for="title">{{ 'post.title'|trans }}</label>
+        <input type="text" id="title" name="title" placeholder="{{ 'post.title'|trans }}" required>
+        <label for="content">{{ 'post.content'|trans }}</label>
+        <textarea id="content" name="content" placeholder="{{ 'post.content'|trans }}" required></textarea>
+        <button type="submit">{{ 'post.create'|trans }}</button>
+    </form>
+    <div id="post-success" style="color:green;display:none;"></div>
+
+    <script>
+    document.getElementById('post-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const form = e.target;
+        fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById('post-success').innerText = '{{ "post.success"|trans }}';
+                document.getElementById('post-success').style.display = 'block';
+                form.reset();
+            } else {
+                alert(data.error || '{{ "post.error"|trans }}');
+            }
+        });
+    });
+    </script>
+{% else %}
+    {% include 'security/login.html.twig' with { posts: posts } %}
+{% endif %}
+<h3>Posts</h3>
+<ul id="post-list">
+    {% for post in posts %}
+        <li><strong>{{ post.title }}</strong><br>{{ post.content }}<br><small>{{ post.created ? post.created|date('d/m/Y H:i') }}</small></li>
+    {% else %}
+        <li>No posts yet.</li>
+    {% endfor %}
+</ul>

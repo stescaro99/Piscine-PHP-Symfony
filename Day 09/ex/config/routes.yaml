@@ -1,0 +1,13 @@
+app_home_nolocale:
+    path: /
+    controller: App\Controller\PostController::index
+controllers:
+    resource: ../src/Controller/
+    type: attribute
+    
+app_home:
+    path: /{_locale}/
+    controller: App\Controller\PostController::index
+    defaults: { _locale: 'en' }
+    requirements:
+        _locale: en|it

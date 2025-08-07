@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<h2>{{ 'post.create'|trans }}</h2>
+<form id="post_form" method="post">
+    <label for="title">{{ 'post.title'|trans }}:</label>
+    <input type="text" id="title" name="title" placeholder="{{ 'post.title'|trans }}" required>
+    <label for="content">{{ 'post.content'|trans }}:</label>
+    <textarea id="content" name="content" placeholder="{{ 'post.content'|trans }}" required></textarea>
+    <button type="submit">{{ 'post.create'|trans }}</button>
+</form>
+
+<div id="post-details" style="margin-bottom:20px;"></div>
+<div id="post-message" style="margin-top:10px;display:none;"></div>
+<div id="post-error-message" style="color:red;margin-top:10px;display:none;"></div>
+
+
+<h3>{{ 'post.list'|trans }}</h3>
+
+<ul id="post-list">
+    {% for post in posts %}
+        <li data-id="{{ post.id }}">
+            <a href="/view/{{ post.id }}"><strong>{{ post.title }}</strong></a><br>
+            {{ post.content }}<br>
+            <small>{{ post.created ? post.created|date('d/m/Y H:i') }}</small>
+        </li>
+    {% else %}
+        <li>{{ 'post.no_posts'|trans }}</li>
+    {% endfor %}
+</ul>
+
+
+
+<script>
+document.getElementById('post-details').addEventListener('click', function(e) {
+    if (e.target.id === 'delete-post-btn') {
+        const id = e.target.getAttribute('data-id');
+        if (confirm("{{ 'post.delete_confirm'|trans }}")) {
+            fetch('/delete/' + id, {
+                method: 'DELETE',
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('post-details').innerHTML = '';
+                    reloadPosts();
+                } else {
+                    alert(data.error || "{{ 'post.delete_failed'|trans }}");
+                }
+            });
+        }
+    }
+});
+
+<script>
+
+function reloadPosts() {
+    fetch('/post-list', { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+        .then(response => response.json())
+        .then(data => {
+            const list = document.getElementById('post-list');
+            list.innerHTML = '';
+            if (data.posts && data.posts.length) {
+                data.posts.forEach(function(post) {
+                    const li = document.createElement('li');
+                    li.innerHTML = '<a href="#" class="post-title" data-id="' + post.id + '"><strong>' + post.title + '</strong></a><br>' + post.content + '<br><small>' + post.created + '</small>';
+                    list.appendChild(li);
+                });
+            } else {
+                list.innerHTML = '<li>{{ "post.no_posts"|trans }}</li>';
+            }
+        });
+}
+
+
+document.getElementById('post_form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const form = e.target;
+    fetch('/post', {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const msg = document.getElementById('post-message');
+        const errorMsg = document.getElementById('post-error-message');
+        msg.style.display = 'none';
+        errorMsg.style.display = 'none';
+        if (data.success) {
+            msg.style.display = 'block';
+            msg.style.color = 'green';
+            msg.innerText = "{{ 'post.success'|trans }}";
+            form.reset();
+            reloadPosts();
+        } else {
+            errorMsg.style.display = 'block';
+            errorMsg.innerText = data.error || "{{ 'post.error'|trans }}";
+        }
+    });
+});
+</script>
+</script>
+{% endblock %}

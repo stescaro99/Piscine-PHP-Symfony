@@ -1,0 +1,45 @@
+<h2>{{ 'signup.title'|trans }}</h2>
+<form id="signup_form" action="{{ path('app_signup') }}" method="post">
+    <label for="email">{{ 'signup.email'|trans }}</label>
+    <input type="email" id="email" name="email" required>
+    <label for="password">{{ 'signup.password'|trans }}</label>
+    <input type="password" id="password" name="password" required>
+    <button type="submit">{{ 'signup.button'|trans }}</button>
+</form>
+<div id="signup-message" style="margin-top:10px;display:none;"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('signup_form');
+    const messageDiv = document.getElementById('signup-message');
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            messageDiv.style.display = 'block';
+            if (data.success) {
+                messageDiv.style.color = 'green';
+                messageDiv.innerText = '{{ "signup.success"|trans }}';
+                form.reset();
+            } else {
+                messageDiv.style.color = 'red';
+                messageDiv.innerText = data.error || '{{ "signup.error"|trans }}';
+            }
+        })
+        .catch(() => {
+            messageDiv.style.display = 'block';
+            messageDiv.style.color = 'red';
+            messageDiv.innerText = 'Errore di comunicazione con il server.';
+        });
+    });
+});

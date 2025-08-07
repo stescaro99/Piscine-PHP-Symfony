@@ -1,0 +1,33 @@
+<form id="login_form" action="{{ path('app_login') }}" method="post">
+    <label for="_username">{{ 'signup.email'|trans }}</label>
+    <input type="email" id="_username" name="_username" required>
+    <label for="_password">{{ 'signup.password'|trans }}</label>
+    <input type="password" id="_password" name="_password" required>
+    <button type="submit">{{ 'login.button'|trans }}</button>
+</form>
+<div id="login-error" style="color:red;display:none;"></div>
+
+<div><a href="{{ path('signup_form') }}">{{ 'signup.button'|trans }}</a></div>
+
+<script>
+document.getElementById('login_form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const form = e.target;
+    fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            setTimeout(function() {
+                window.location.href = '/post';
+            }, 200);
+        } else {
+            document.getElementById('login-error').innerText = data.error || '{{ "login.error"|trans }}';
+            document.getElementById('login-error').style.display = 'block';
+        }
+    });
+});
+</script>

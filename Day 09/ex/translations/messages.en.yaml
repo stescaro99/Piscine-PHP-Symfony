@@ -1,0 +1,14 @@
+login.button: Login
+login.error: Not valid credentials.
+signup.title: Sign Up
+signup.email: Email
+signup.password: Password
+signup.button: Sign Up
+signup.success: The registration was successful! You can now log in.
+signup.error: Error during registration.
+post.title: Title
+post.content: Content
+post.create: Create Post
+post.success: Post created!
+post.error: Error creating post.
+post.unique_error: A post with this title already exists.
