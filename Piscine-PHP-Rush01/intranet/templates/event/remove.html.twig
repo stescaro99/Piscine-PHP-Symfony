@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{parent()}} | Remove Event {% endblock %}
+
+{% block body %}
+
+{% include 'components/navbar.html.twig' %}
+
+<div class="remove-event">
+	<h1>Remove an Events</h1>
+
+	{{ form_start(form) }}
+		<h3>Select events to be removed:</h3>
+		<div class="checkbox-group">
+		    {% for checkbox in form.events %}
+		        <label>
+		            {{ form_widget(checkbox) }}
+		            {{ form_label(checkbox) }}
+		        </label>
+		    {% endfor %}
+		</div>
+		<button type="submit" class="btn btn-primary">Elimina Selezionati</button>
+	{{ form_end(form) }}
+	<form action="{{ path('admin') }}" method="get" style="margin-top: 5px;">
+        <button type="submit" class="btn btn-primary">Back</button>
+    </form>
+</div>
+{% endblock %}

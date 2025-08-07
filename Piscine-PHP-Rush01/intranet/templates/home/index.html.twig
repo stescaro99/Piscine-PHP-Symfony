@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ parent() }} | Main Page
+{% endblock %}
+
+{% block body %}
+
+    <h1>Welcome to 24 School</h1>
+    
+    {% if app.user %}
+        <form action="{{ path('userpage', { id: app.user.id }) }}" method="get" style="margin-top: 5px;">
+            <button type="submit" class="btn btn-primary">Go to Profile</button>
+        </form>
+    {% else %}
+        <form action="{{ path('login') }}" method="get" style="margin-top: 5px;">
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    {% endif %}
+
+{% endblock %}
+

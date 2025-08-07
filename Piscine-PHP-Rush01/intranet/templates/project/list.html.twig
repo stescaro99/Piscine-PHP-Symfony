@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Projects{% endblock %}
+
+{% block body %}
+
+{% include 'components/navbar.html.twig' %}
+
+<div class="edit_info">
+    <h1>Available Projects</h1>
+
+    {% if projects is empty %}
+        <p class="login_message">No projects available at the moment.</p>
+    {% else %}
+        <ul>
+            {% for project in projects %}
+                <li style="margin-bottom: 20px;">
+                    <strong>{{ project.name }}</strong><br>
+                    {{ project.description|length > 100 ? project.description[:100] ~ '...' : project.description }}
+                    <br>
+                    XP: {{ project.xp }} |
+                    Estimated time: {{ project.estimatedTimeInHours }} hours
+                    <br>
+                    <form action="{{ path('project_show', { id: project.id }) }}" method="get" style="margin-top: 5px;">
+                        <button type="submit" class="btn btn-secondary">View Details</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if app.user %}
+        <form action="{{ path('userpage', { id: app.user.id }) }}" method="get" style="margin-top: 30px;">
+            <button type="submit" class="btn btn-primary">Back to your profile</button>
+        </form>
+    {% endif %}
+</div>
+
+{% endblock %}

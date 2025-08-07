@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ parent() }} | Admin
+{% endblock %}
+
+{% block body %}
+
+{% include 'components/navbar.html.twig' %}
+
+<div class="edit_info">
+
+    <h2>Admin Section</h2>
+    <div style="display: flex; flex-direction: row; gap: 150px; justify-content: center; align-items: flex-start; width: 100%;">
+        {% if registrationForm is defined and registrationForm is not null %}
+            <div style="width 100%">
+                <h2>Register a New User</h2>
+                {{ form_start(registrationForm) }}
+                    {{ form_widget(registrationForm) }}
+                    <button class="btn btn-primary">Register</button>
+                {{ form_end(registrationForm) }}
+            </div>
+        {% endif %}
+
+    <div style="display: flex; flex-direction: column; gap: 10px">
+        <h2>create a new event</h2>
+        <form action="{{ path('admin_event_new') }}" method="get" style="margin-top: 5px;">
+            <button type="submit" class="btn btn-primary">Create Event</button>
+        </form>
+        <form action="{{ path('admin_event_remove') }}" method="get" style="margin-top: 5px;">
+            <button type="submit" class="btn btn-primary">Remove Event</button>
+        </form>
+    </div>
+   </div> 
+    <form action="{{ path('userpage', {id: user.id}) }}" method="get" style="margin-top: 5px;">
+        <button type="submit" class="btn btn-primary">Go Back</button>
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<h1>Agenda</h1>
+
+<div class="example-wrapper">
+	<h1>{{ controller_name }}! ✅</h1>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('admin_event_new') }}" class="btn btn-primary">+ Crea Evento</a>
+    {% endif %}
+
+	{% if events %}
+	<ul>
+	{% for event in events %}
+		<li>
+			<p>{{event.name}}</p>
+			<h3 class="event-title">{{event.title}}</h3>
+			{% if event.participants < event.maxParticipants %}
+			<div class="event-container">
+				<div class="date-container">
+					<p>{{ event.date|date('Y-m-d') }}</p>
+					<p>{{ event.startTime|date('H:i') }} h</p>
+					<p>{{ event.endTime|date('H:i') }} h</p>
+					<p>{{ event.duration }} h</p>
+				</div>
+				<div class="event-description">
+					{{event.description}}
+				</div>
+				<div class="event-participant">
+					{{event.participants}}/{{event.maxParticipants}}
+				</div>
+			{% else %}
+				<div>
+					This event is full!
+				</div>
+			{% endif %}
+			</div>
+		</li>
+	{% endfor %}
+	</ul>
+	{% else %}
+	<div>
+		No events scheduled!
+	<div>
+	{% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{parent()}} | New Event {% endblock %}
+
+{% block body %}
+
+{% include 'components/navbar.html.twig' %}
+
+<div class="example-wrapper">
+    <h1>Create an Event</h1>
+        {{ form_start(eventForm) }}
+            {{ form_widget(eventForm) }}
+                <button class="btn btn-primary" type="submit">Create</button>
+        {{ form_end(eventForm) }}
+        <form action="{{ path('admin') }}" method="get" style="margin-top: 5px;">
+            <button type="submit" class="btn btn-primary">Back</button>
+        </form>
+</div>
+{% endblock %}
